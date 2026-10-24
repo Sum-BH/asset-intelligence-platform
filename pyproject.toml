@@ -1,0 +1,65 @@
+[project]
+name = "asset-intelligence-platform"
+version = "1.0.0"
+description = "Open-source, on-premise, multimodal industrial asset intelligence stack: sense -> detect -> diagnose -> explain -> prescribe -> schedule -> act -> learn."
+readme = "README.md"
+requires-python = ">=3.11,<3.13"
+license = { text = "Apache-2.0" }
+authors = [{ name = "Sumedh Bhalerao" }]
+
+# The root project depends on the workspace members it needs for a given phase.
+# Phase 0/1 only needs aip-core, aip-data, aip-signal.
+dependencies = [
+    "aip-core",
+    "aip-data",
+    "aip-signal",
+    "aip-rag",
+    "aip-vision",
+    "aip-agents",
+    "aip-serve",
+]
+
+[tool.uv.sources]
+aip-core = { workspace = true }
+aip-data = { workspace = true }
+aip-signal = { workspace = true }
+aip-vision = { workspace = true }
+aip-rag = { workspace = true }
+aip-agents = { workspace = true }
+aip-serve = { workspace = true }
+
+[tool.uv.workspace]
+members = [
+    "shared/aip_core",
+    "modules/m1_data_engineering",
+    "modules/m2_signal_intelligence",
+    "modules/m3_vision_inspection",
+    "modules/m4_genai_rag",
+    "modules/m5_agentic_orchestration",
+    "modules/m6_mlops_deployment",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.6",
+    "pre-commit>=3.7",
+    "ipykernel>=6.29",
+    "jupyterlab>=4.2",
+    "jupytext>=1.16",
+    "nbstripout>=0.7",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+exclude = ["aipenv", ".venv", "dist"]
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.pytest.ini_options]
+testpaths = ["shared", "modules"]
+addopts = "-q"
+
+[tool.ruff.lint.per-file-ignores]
+"notebooks/**" = ["E402", "B018", "F401", "E501", "I001", "E701", "E702", "B007", "B905", "E731", "F821", "E401", "F404", "F541"]

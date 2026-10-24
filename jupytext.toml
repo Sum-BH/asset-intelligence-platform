@@ -1,0 +1,3 @@
+# Pair every .ipynb under notebooks/ with a git-friendly py:percent script.
+# The .py file is the reviewable source; the .ipynb carries outputs locally.
+formats = "ipynb,py:percent"
